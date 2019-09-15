@@ -1,26 +1,53 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from 'react';
+import io from 'socket.io-client'
+import { connect } from 'react-redux'
+import { updateStatus } from './reducers/conversations/actionsCreators'
+import { loginUser } from './reducers/userInfo/actionsCreators'
+import Chat from './pages/Chat'
 
-function App() {
+const socket = io('http://localhost:3333')
+let timer
+let verifyStatus = false
+function App({ loginUser, userActive, updateStatus, statusActiveUser }) {
+  const [testStattus, setTestStatus] = useState({})
+  useEffect(() => {
+    if (userActive.hasOwnProperty('_id')) {
+      clearInterval(timer)
+      timer = setInterval(() => {
+        socket.emit('verifyStatus', userActive._id)
+      }, 3000)
+    }
+    setTestStatus(statusActiveUser)
+  }, [userActive])
+
+  useEffect(() => {
+    socket.on('status', status => {
+      if (statusActiveUser.status.hasOwnProperty('_id') && verifyStatus || userActive._id === status.userId) {
+
+        if (statusActiveUser.status.userId !== status.userId && statusActiveUser.status.status !== status.status || statusActiveUser.status.status === status.status) {
+          verifyStatus = null
+          updateStatus(status)
+          return false
+        }
+      } else if (verifyStatus === false) {
+        !verifyStatus && updateStatus(status)
+        verifyStatus = true
+        return false
+      }
+      verifyStatus = true
+    })
+    console.log('dsds')
+  }, [userActive])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Chat />
     </div>
   );
 }
+const mapStateToProps = state => ({
+  userActive: state.posts.userActive,
+  statusActiveUser: state.listConversations
+})
 
-export default App;
+export default connect(mapStateToProps, { loginUser, updateStatus })(App)
