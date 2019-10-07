@@ -16,7 +16,7 @@ const SignUp = ({ setIsSignIn, messageError, setMessageError, loginUser }) => {
       return false
     }
 
-    if (password.value !== confirmPassword) {
+    if (password.value !== confirmPassword.value) {
       setMessageError('Senhas diferentes!')
       return false
     }
@@ -27,7 +27,7 @@ const SignUp = ({ setIsSignIn, messageError, setMessageError, loginUser }) => {
         password: password.value
       })
       await loginUser(email.value, password.value)
-
+      window.location.reload()
     } catch (error) {
       setMessageError('Ocorreu um erro ao tentar se cadastrar!')
     }
