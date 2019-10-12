@@ -23,6 +23,7 @@ export const ContainerSearch = styled.div`
       box-shadow: 1px 1px 5px #999;
       width: 100%;
       position: absolute;
+      z-index: 12;
     }
   }
 `
