@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/chat-front/static/css/main.be18ea50.chunk.css",
-    "main.js": "/chat-front/static/js/main.5320603e.chunk.js",
-    "main.js.map": "/chat-front/static/js/main.5320603e.chunk.js.map",
+    "main.js": "/chat-front/static/js/main.94487067.chunk.js",
+    "main.js.map": "/chat-front/static/js/main.94487067.chunk.js.map",
     "runtime~main.js": "/chat-front/static/js/runtime~main.9acc4cb0.js",
     "runtime~main.js.map": "/chat-front/static/js/runtime~main.9acc4cb0.js.map",
     "static/css/2.80539b1f.chunk.css": "/chat-front/static/css/2.80539b1f.chunk.css",
     "static/js/2.5d3662ed.chunk.js": "/chat-front/static/js/2.5d3662ed.chunk.js",
     "static/js/2.5d3662ed.chunk.js.map": "/chat-front/static/js/2.5d3662ed.chunk.js.map",
     "index.html": "/chat-front/index.html",
-    "precache-manifest.d4924c125bee31b4aba3393f404f8f94.js": "/chat-front/precache-manifest.d4924c125bee31b4aba3393f404f8f94.js",
+    "precache-manifest.64efd8ccdebc62b741411f10308b8afb.js": "/chat-front/precache-manifest.64efd8ccdebc62b741411f10308b8afb.js",
     "service-worker.js": "/chat-front/service-worker.js",
     "static/css/2.80539b1f.chunk.css.map": "/chat-front/static/css/2.80539b1f.chunk.css.map",
     "static/css/main.be18ea50.chunk.css.map": "/chat-front/static/css/main.be18ea50.chunk.css.map"
