@@ -14,7 +14,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: #eee;
-  /* color: rgb(118, 147, 210); */
+  padding: 0 10px;
 }
 .close-preview{
   position: absolute;
