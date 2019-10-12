@@ -1,26 +1,27 @@
-import React, { useState } from 'react'
+import React from 'react'
 import getHours from '../../../config/getHours'
 import { ContainerMessage } from './styles'
 
-const Message = ({ idUser, message }) => {
-  const [isPreview, setIsPreview] = useState(false)
+const Message = ({ isIdUserLogged, message, setUrlPreviewImage }) => {
+
   return (
-    <ContainerMessage idUser={idUser} isImg={false} preview={isPreview}>
-      {isPreview && <div className="close-preview" onClick={() => setIsPreview(false)}>
-        <i className="fas fa-times"></i>
-      </div>}
+    <ContainerMessage
+      isIdUserLogged={isIdUserLogged}
+      data-id-message={message._id}
+      data-js={!isIdUserLogged && `viewed:${message.viewed}`}
+      isImg={false}>
       {message &&
         <div className="content-message">
           {message.imagePath && <div className="content-img">
             <img
-              onClick={() => setIsPreview(!isPreview)}
-              src={`http://localhost:3333/files/${message.imagePath}`}
+              onClick={() => setUrlPreviewImage(message.imagePath)}
+              src={message.imagePath}
               alt="" />
           </div>}
           <div>
             <p>{message.message}</p>
             <span className='hour'>
-              {getHours(message.createdAt)}
+              {getHours(message.createdAt, 'posts')}
             </span>
           </div>
         </div>
