@@ -7,15 +7,25 @@ export const ConfigList = styled.ul`
   top: 60px;
   left: 0px;
   border: solid 1px #bbb;
-  color: #444;
+  color: #666;
   list-style-type: none;
-  z-index: 10;
+  z-index: 14;
   li{
     font-size: 15px;
     font-weight: 600;
     text-align: center;
-    padding: 6px 0;
+    height: 30px;
     border-bottom: 1px solid #bbb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    label{
+      width: 100%;
+      display: inline-block;
+      padding-top: 5px;
+      height: 100%;
+    }
 
     &:hover{
       background: #ddd;
