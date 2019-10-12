@@ -1,4 +1,4 @@
-import { LOADING_CONVERSATIONS, STATUS } from './actionsCreators'
+import { LOADING_CONVERSATIONS, STATUS, UPDATE_MESSAGES_NOT_READ } from './actionsCreators'
 
 const initialState = {
   contacts: [],
@@ -15,6 +15,13 @@ const conversations = (state = initialState, action) => {
       return {
         ...state,
         status: action.payload
+      }
+    case UPDATE_MESSAGES_NOT_READ:
+      return {
+        ...state,
+        contacts: state.contacts.map(contact => contact.idConversation === action.payload.idConversation
+          ? { ...contact, messagesNotRead: action.payload.numberMessages }
+          : contact)
       }
     default:
       return state
