@@ -6,7 +6,11 @@ export const ContainerPosts = styled.main`
   height: 100%;
   padding: 5px 15px;
   overflow-y: auto;
-
+  position: relative;
+  opacity: 0;
+  transition: opacity 50ms linear;
+  flex: 5;
+  
   ::-webkit-scrollbar {
     width: 6px;
     background: #F4F4F4;
