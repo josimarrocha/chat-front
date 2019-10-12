@@ -2,20 +2,47 @@ import styled from 'styled-components'
 
 export const ContainerSend = styled.div`
   background: #ddd;
-  padding: 5px 15px;
+  padding: 8px 15px;
   width: 100%;
-  height: 15%;
+  /* height: 100px; */
   display: flex;
+  /* padding:10px 0; */
+  /* position: absolute; */
+  
+  /* bott */
+  /* flex: 1 1 0px; */
+  max-height: 80px;
   flex-wrap:wrap;
   align-items: center;
-  position: relative;
-
+  /* position: relative; */
+  /* bottom: 5px; */
+  @media (max-height: 700px) {
+    max-height: 100px;
+    margin-bottom: 15px;
+    /* padding: 8px 15px; */
+  }
   .message-content{
+    div.close-picker{
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      position: absolute;
+      top:0;
+      left:0;
+      z-index: 0;
+    }
     textarea{
+      max-width: 500px;
       resize: none;
-      padding: 8px 15px;
+      overflow-x: hidden;
+      padding-left:12px;
+      padding-top:10px;
       border-radius: 50px;
+      border: solid 1px #bbb;
       outline:0;
+      @media (max-width: 900px) {
+        max-width: 320px;
+      }
     }
   }
   .icons i{
@@ -29,7 +56,7 @@ export const ContainerSend = styled.div`
   }
   .btn-send{
     margin-left: 8px;
-    a{
+    button{
       border-radius: 20px;
       text-decoration:none;
       background: #aaa;
@@ -39,6 +66,13 @@ export const ContainerSend = styled.div`
       display: block;
       letter-spacing: 0.8px;
       font-weight: 600;
+      border:none;
+      outline: none;
+
+      &:active{
+        transition: background 200ms ease;
+        background: #ccc;
+      }
     }
   }
 `
@@ -77,7 +111,7 @@ export const PreviewImg = styled.figure`
     max-width: 45%;
     max-height: 380px;
     img{
-      max-width: 100%;
+      max-width: 80%;
       max-height: 380px;
       width: 100%;
     }
