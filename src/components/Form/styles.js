@@ -15,13 +15,15 @@ export const FormContainer = styled.form`
     margin-bottom: 15px;
     position: relative;
 
-    &:before{
-      content: '*';
-      color: red;
-      position: absolute;
-      display: block;
-      left: -10px;
-    }
+    ${props => props.signUp && `
+      &:before{
+        content: '*';
+        color: red;
+        position: absolute;
+        display: block;
+        left: -10px;
+      }
+    `}
   }
   input{
     width: 100%;

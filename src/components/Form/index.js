@@ -3,7 +3,7 @@ import { FormContainer } from './styles'
 
 const Form = ({ submit, signUp, setIsSignIn, messageError }) => {
   return (
-    <FormContainer onSubmit={submit}>
+    <FormContainer onSubmit={submit} signUp={signUp}>
       <span className='error'>{messageError}</span>
       {signUp && <div className="group-input">
         <input type="text" name='name' placeholder='Digite seu nome completo' />
