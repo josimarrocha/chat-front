@@ -75,7 +75,7 @@ const UserChat = ({ userChat, loadingPosts, search, listConversations, lastUpdat
                   idUser: userChat._id,
                   idConversation
                 })
-              }}>Excluir contato</li>
+              }}>Excluir mensagens</li>
             </ul>}
           </div>
         </>
