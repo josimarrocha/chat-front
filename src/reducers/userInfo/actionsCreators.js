@@ -4,6 +4,7 @@ import { url } from '../../config/socket.io'
 export const LOGIN_USER = 'user:LOGIN_USER'
 export const SEARCH_USER = 'user:SEARCH_USER'
 export const UPDATE_IMAGE_PROFILE = 'user:UPDATE_IMAGE_PROFILE'
+export const UPDATE_NAME_USER = 'user:UPDATE_NAME_USER'
 
 const socket = io(url)
 let timer
@@ -42,6 +43,14 @@ export const searchUser = (query) => async dispatch => {
   dispatch({
     type: SEARCH_USER,
     payload: data ? data.data : []
+  })
+}
+
+export const updateNameUser = (name) => async dispatch => {
+  const { data: { newName } } = await api.put('/user', { name })
+  dispatch({
+    type: UPDATE_NAME_USER,
+    payload: newName
   })
 }
 

@@ -1,4 +1,4 @@
-import { LOGIN_USER, SEARCH_USER, UPDATE_IMAGE_PROFILE } from './actionsCreators'
+import { LOGIN_USER, SEARCH_USER, UPDATE_IMAGE_PROFILE, UPDATE_NAME_USER } from './actionsCreators'
 
 const initialState = {
   serachUsers: []
@@ -20,6 +20,11 @@ const userInfo = (state = initialState, action) => {
       return {
         ...state,
         imageProfile: action.payload
+      }
+    case UPDATE_NAME_USER:
+      return {
+        ...state,
+        name: action.payload
       }
     default:
       return state
