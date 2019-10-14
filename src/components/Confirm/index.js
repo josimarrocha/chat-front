@@ -10,7 +10,7 @@ const Confirm = ({ setIsShowConfirm, deleteConversation }) => {
       <div className="confirm-content">
         <h4>
           <i className="fas fa-exclamation-triangle"></i>
-          Deseja realmente excluir o contato? Todas as mensagens serão apagadas. <br />Deseja realmente continuar?
+          Tem certeza disso? Isso apagará todas as mensagens.<br />Deseja realmente continuar?
         </h4>
         <div className="btn-actions">
           <button className='btn cancel' onClick={() => setIsShowConfirm(false)}>
