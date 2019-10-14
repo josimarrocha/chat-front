@@ -28,6 +28,22 @@ const Chat = ({ userActive, newMessage, loadingConversations, updateMessageRead 
     })
   }, [])
 
+  useEffect(() => {
+    renderContainerPosts()
+  }, [userActive.idConversation])
+
+  const renderContainerPosts = () => {
+    return (
+      <Posts
+        positionLine={positionLine}
+        idConversation={userActive.idConversation}
+        containerChatRef={containerChatRef}
+        setUrlPreviewImage={setUrlPreviewImage}
+        setLoadingMessages={setLoadingMessages}
+      />
+    )
+  }
+
   return (
     <>
       {urlPreviewImage &&
@@ -47,14 +63,8 @@ const Chat = ({ userActive, newMessage, loadingConversations, updateMessageRead 
             color='#7693d2'
           />
         </div>
-        {userActive.hasOwnProperty('_id') &&
-          <Posts
-            positionLine={positionLine}
-            idConversation={userActive.idConversation}
-            containerChatRef={containerChatRef}
-            setUrlPreviewImage={setUrlPreviewImage}
-            setLoadingMessages={setLoadingMessages}
-          />
+        {userActive.hasOwnProperty('_id') && renderContainerPosts()
+
         }
         <MessageViewed ref={lineRef} />
         {userActive.hasOwnProperty('_id')
