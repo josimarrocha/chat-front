@@ -14,34 +14,32 @@ const Posts = ({ posts, userInfo, idConversation, containerChatRef, positionLine
   useEffect(() => {
     page = 0
     containerChatRef.current.style.opacity = 0
-    setTimeout(() => {
-      if (!messagesNotRead) {
-        containerChatRef.current.scrollTop += containerChatRef.current.scrollHeight
-        containerChatRef.current.style.opacity = 1
-        initialConversation()
-      } else {
-        if (containerChatRef.current.scrollHeight === containerChatRef.current.clientHeight) {
-          containerChatRef.current.style.opacity = 1
-          initialConversation()
-          return
-        }
+    if (!messagesNotRead) {
+      containerChatRef.current.scrollTop = containerChatRef.current.scrollHeight
+      containerChatRef.current.style.opacity = 1
+      initialConversation()
+    } else {
+      containerChatRef.current.scrollTop = 0
+      const messages = document.querySelectorAll('[data-js="viewed:false"]')[0]
+      if (messages) {
         let warningMessage = document.createElement('span')
         warningMessage.textContent = 'Mensagen(s) não visualizada(s)'
         warningMessage.classList.add('warningMessage')
-        const messages = document.querySelectorAll('[data-js="viewed:false"]')[0]
         let positionMessage = messages.getBoundingClientRect().top
-        containerChatRef.current.scrollTop = (positionMessage - positionLine) + 100
-        messages.insertAdjacentElement('afterbegin', warningMessage)
         containerChatRef.current.style.opacity = 1
+        messages.insertAdjacentElement('afterbegin', warningMessage)
+        containerChatRef.current.scrollTop = (positionMessage - positionLine) + 100
       }
-      socketnewMessage.on('newMessage', () => {
-        if (containerChatRef.current.scrollHeight - containerChatRef.current.scrollTop - 100 < 600) {
-          containerChatRef.current.scrollTop = containerChatRef.current.scrollHeight
-        }
-        initialConversation()
-      })
-    }, 180)
+    }
 
+    socketnewMessage.on('newMessage', () => {
+      // if()  
+      initialConversation()
+      if (containerChatRef.current.scrollHeight - containerChatRef.current.scrollTop - 100 < 600) {
+        containerChatRef.current.scrollTop = containerChatRef.current.scrollHeight
+      }
+    })
+    containerChatRef.current.style.opacity = 1
     initialConversation()
   }, [idConversation])
 
@@ -58,6 +56,8 @@ const Posts = ({ posts, userInfo, idConversation, containerChatRef, positionLine
         })
         idsMessages = {}
       }
+      containerChatRef.current.style.opacity = 1
+
     }
   }
   const registerIdsMessages = (message) => {
