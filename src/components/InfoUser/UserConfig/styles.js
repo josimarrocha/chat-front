@@ -19,12 +19,14 @@ export const ConfigList = styled.ul`
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
 
     label{
       width: 100%;
       display: inline-block;
       padding-top: 5px;
       height: 100%;
+      cursor: pointer;
     }
 
     &:hover{
