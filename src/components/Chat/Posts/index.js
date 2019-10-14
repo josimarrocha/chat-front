@@ -9,39 +9,49 @@ import { ContainerPosts } from './styles'
 let idsMessages = {}
 let page = 0
 const Posts = ({ posts, userInfo, idConversation, containerChatRef, positionLine, messagesNotRead, pageActual, nextPage, previousPosts, totalPages, setUrlPreviewImage, setLoadingMessages }) => {
-
   let socketnewMessage = io(url)
   useEffect(() => {
     page = 0
     containerChatRef.current.style.opacity = 0
     if (!messagesNotRead) {
-      containerChatRef.current.scrollTop = containerChatRef.current.scrollHeight
+      containerChatRef.current.scrollTop += 99999
       containerChatRef.current.style.opacity = 1
       initialConversation()
     } else {
       containerChatRef.current.scrollTop = 0
-      const messages = document.querySelectorAll('[data-js="viewed:false"]')[0]
-      if (messages) {
-        let warningMessage = document.createElement('span')
-        warningMessage.textContent = 'Mensagen(s) não visualizada(s)'
-        warningMessage.classList.add('warningMessage')
-        let positionMessage = messages.getBoundingClientRect().top
-        containerChatRef.current.style.opacity = 1
-        messages.insertAdjacentElement('afterbegin', warningMessage)
-        containerChatRef.current.scrollTop = (positionMessage - positionLine) + 100
-      }
+      setWarningMessageNotRead(true)
     }
 
-    socketnewMessage.on('newMessage', () => {
-      // if()  
-      initialConversation()
-      if (containerChatRef.current.scrollHeight - containerChatRef.current.scrollTop - 100 < 600) {
-        containerChatRef.current.scrollTop = containerChatRef.current.scrollHeight
-      }
-    })
     containerChatRef.current.style.opacity = 1
     initialConversation()
   }, [idConversation])
+
+  useEffect(() => {
+    socketnewMessage.on('newMessage', () => {
+      initialConversation()
+      if (containerChatRef.current.scrollHeight - containerChatRef.current.scrollTop - 100 < 600) {
+        containerChatRef.current.scrollTop = containerChatRef.current.scrollHeight
+      } else {
+        setWarningMessageNotRead(false)
+      }
+    })
+  }, [])
+
+  const createElementWarningMessage = (messages) => {
+    let warningMessage = document.createElement('span')
+    warningMessage.textContent = 'Mensagen(s) não visualizada(s)'
+    warningMessage.classList.add('warningMessage')
+    messages.insertAdjacentElement('afterbegin', warningMessage)
+    return warningMessage
+  }
+
+  const setWarningMessageNotRead = (scroll) => {
+    const messages = document.querySelectorAll('[data-js="viewed:false"]')[0]
+    let positionMessage = messages.getBoundingClientRect().top
+    containerChatRef.current.style.opacity = 1
+    createElementWarningMessage(messages)
+    if (scroll) containerChatRef.current.scrollTop = (positionMessage - positionLine) + 100
+  }
 
   const initialConversation = () => {
     if (containerChatRef.current.scrollHeight === containerChatRef.current.clientHeight) {
@@ -61,7 +71,11 @@ const Posts = ({ posts, userInfo, idConversation, containerChatRef, positionLine
     }
   }
   const registerIdsMessages = (message) => {
-    if (message.idUser.toString() !== userInfo._id && !message.viewed) {
+    let isUserContact = message.from.toString() !== userInfo._id
+      ? true : message.to.toString() !== userInfo._id
+        ? true : false
+
+    if (isUserContact && !message.viewed) {
       idsMessages = {
         ...idsMessages,
         [message._id]: message._id
@@ -109,7 +123,7 @@ const Posts = ({ posts, userInfo, idConversation, containerChatRef, positionLine
           <Message
             setUrlPreviewImage={setUrlPreviewImage}
             key={message._id}
-            isIdUserLogged={message.idUser.toString() === userInfo._id}
+            isIdUserLogged={message.from.toString() === userInfo._id}
             message={message}
           />
         )
