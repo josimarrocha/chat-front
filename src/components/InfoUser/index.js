@@ -4,12 +4,13 @@ import gethours from '../../config/getHours'
 import UserMenuConfig from './UserConfig'
 import SearchUser from '../SearchUser'
 import socket from '../../config/socket.io'
-import { updateImageProfile } from '../../reducers/userInfo/actionsCreators'
-import { ConatinerInfo, PreviewImage } from './styles'
+import { updateImageProfile, updateNameUser } from '../../reducers/userInfo/actionsCreators'
+import { ConatinerInfo, PreviewImage, ModalUpdateName, Actions } from './styles'
 
 let timer
-const InfoUser = ({ userInfo, userActive, status, updateImageProfile }) => {
+const InfoUser = ({ userInfo, userActive, status, updateImageProfile, updateNameUser }) => {
   const [isMenuVisible, setIsMenuVisible] = useState(false)
+  const [showInputUpdateName, setShowInpurtUpdateName] = useState(false)
   const [fileImage, setFileImage] = useState(false)
   const [isTyping, setIsTyping] = useState(false)
 
@@ -54,6 +55,16 @@ const InfoUser = ({ userInfo, userActive, status, updateImageProfile }) => {
     setIsMenuVisible(false)
   }
 
+  const updateName = (e) => {
+    e.preventDefault()
+    const name = e.target.newName.value
+    if (name !== '') {
+      updateNameUser(name)
+      setShowInpurtUpdateName(false)
+      setIsMenuVisible(false)
+    }
+  }
+
   return (
     <ConatinerInfo>
       {fileImage && <PreviewImage>
@@ -65,11 +76,26 @@ const InfoUser = ({ userInfo, userActive, status, updateImageProfile }) => {
             <img src={window.URL.createObjectURL(fileImage)} alt="" />
           </figure>
         </div>
-        <div className="actions">
+        <Actions>
           <button className='btn' onClick={imageProfileUpdate}>Confirmar</button>
           <button className='btn' onClick={closeUpdateImage}>Cancelar</button>
-        </div>
+        </Actions>
       </PreviewImage>}
+      {showInputUpdateName && <ModalUpdateName>
+        <form action="" onSubmit={updateName}>
+          <div className="form-group">
+            <input
+              type="text"
+              name="newName"
+              defaultValue={userInfo.name}
+              placeholder='Digite um novo nome para o perfil' />
+          </div>
+          <Actions>
+            <button className='btn'>Alterar</button>
+            <button className='btn' onClick={() => setShowInpurtUpdateName(false)}>Cancelar</button>
+          </Actions>
+        </form>
+      </ModalUpdateName>}
 
       <div className="user-conversation">
         {userActive.hasOwnProperty('_id') &&
@@ -100,7 +126,8 @@ const InfoUser = ({ userInfo, userActive, status, updateImageProfile }) => {
         {isMenuVisible &&
           <UserMenuConfig
             setFileImage={setFileImage}
-            setIsMenuVisible={setIsMenuVisible} />
+            setIsMenuVisible={setIsMenuVisible}
+            setShowInpurtUpdateName={setShowInpurtUpdateName} />
         }
       </div>
     </ConatinerInfo>
@@ -113,4 +140,4 @@ const mapStateToProps = state => ({
   userActive: state.posts.userActive
 })
 
-export default connect(mapStateToProps, { updateImageProfile })(InfoUser)
+export default connect(mapStateToProps, { updateImageProfile, updateNameUser })(InfoUser)

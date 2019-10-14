@@ -104,7 +104,9 @@ export const PreviewImage = styled.div`
       }
     }
   }
-  .actions{
+`
+
+export const Actions = styled.div`
     margin: 0 auto;
     align-items: center;
     display: flex;
@@ -112,7 +114,7 @@ export const PreviewImage = styled.div`
     padding-top: 20px;
 
     .btn{
-      height: 45px;
+      height: 40px;
       text-transform: uppercase;
       font-weight: 600; 
       width: 100%;
@@ -128,6 +130,30 @@ export const PreviewImage = styled.div`
           background: rgba(89, 125, 204, 0.6);
         }
       }
+    }
+`
+
+export const ModalUpdateName = styled.div`
+  width: 100%;
+  position: absolute;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 20;
+  top: 0;
+  left: 0;
+  form{
+    max-width: 350px;
+    width: 100%;
+    margin: 250px auto;
+     
+    .form-group input{
+      width: 100%;
+      /* height: 35px; */
+      padding: 5px 5px;
+    }
+
+    .action{
+      
     }
   }
 `
