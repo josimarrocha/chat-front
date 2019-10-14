@@ -4,30 +4,24 @@ export const ContainerSend = styled.div`
   background: #ddd;
   padding: 8px 15px;
   width: 100%;
-  /* height: 100px; */
   display: flex;
-  /* padding:10px 0; */
-  /* position: absolute; */
-  
-  /* bott */
-  /* flex: 1 1 0px; */
   max-height: 80px;
   flex-wrap:wrap;
   align-items: center;
-  /* position: relative; */
-  /* bottom: 5px; */
+  position: relative;
+
   @media (max-height: 700px) {
     max-height: 100px;
     margin-bottom: 15px;
-    /* padding: 8px 15px; */
   }
+  
   .message-content{
     div.close-picker{
       width: 100%;
-      height: 100%;
+      height: 1000%;
       background: transparent;
       position: absolute;
-      top:0;
+      top:-900%;
       left:0;
       z-index: 0;
     }
