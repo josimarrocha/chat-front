@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "0e96c5629440829536552cc1eae5a9b5",
+    "revision": "309c1f3d23fa5ed9c432ca716b4ea48b",
     "url": "/chat-front/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/chat-front/static/css/2.80539b1f.chunk.css"
   },
   {
-    "revision": "b3be0428748b9f1a5309",
+    "revision": "fcd5659d54421df35be0",
     "url": "/chat-front/static/css/main.d0d6810e.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/chat-front/static/js/2.fbe4f245.chunk.js"
   },
   {
-    "revision": "b3be0428748b9f1a5309",
-    "url": "/chat-front/static/js/main.230eeb51.chunk.js"
+    "revision": "fcd5659d54421df35be0",
+    "url": "/chat-front/static/js/main.3b37bff7.chunk.js"
   },
   {
     "revision": "cc421bfc778c994a32a0",
