@@ -22,5 +22,11 @@ flex: 1 1 25%;
       right: 0;
       bottom: 0;
     } */
+    .add-user{
+      text-align: center;
+      margin-top: 50px;
+      color: #555;
+      font-style: italic;
+    }
   }
 `
