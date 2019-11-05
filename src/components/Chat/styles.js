@@ -7,9 +7,13 @@ export const ContainerChat = styled.div`
   flex-direction: column;
   position: relative;
   background-image: url('images/speech-bubble.svg');
+  background-size: 60%;
   background-repeat: no-repeat;
-  background-position-x: 70px;
-
+  background-position-x: 150px;
+  background-position-y: 60px;
+  @media (max-height: 700px) {
+    background-position-y: 0px;
+  }
   .loader-mensagens{
     width: 100%;
     position: absolute;
@@ -21,11 +25,16 @@ export const ContainerChat = styled.div`
   }
 `
 
-export const MessageViewed = styled.div`
+export const LineScroll = styled.div`
   max-width: 1060px;
   height: 30px;
   width: 100%;
   position: absolute;
-  bottom:75px;
+  ${porps => porps.top ? `
+    top: 0px;
+  `: `
+    bottom:75px;
+  `
+  }
   overflow: unset
 `

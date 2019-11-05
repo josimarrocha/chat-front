@@ -2,29 +2,33 @@ import React, { useEffect, useRef, useState } from 'react'
 import { connect } from 'react-redux'
 import io from 'socket.io-client'
 import { PulseLoader } from 'react-spinners'
+import { CSSTransition } from 'react-transition-group'
 import Posts from './Posts'
-import { newMessage, updateMessageRead } from '../../reducers/posts/actionsCreators'
+import { updateMessageRead } from '../../reducers/posts/actionsCreators'
 import { loadingConversations } from '../../reducers/conversations/actionsCreators'
 import SendMessage from './SendMessage'
-import { ContainerChat, MessageViewed } from './styles'
+import { ContainerChat, LineScroll } from './styles'
 import socketMessageRead, { url } from '../../config/socket.io'
 
-let positionLine
-const Chat = ({ userActive, newMessage, loadingConversations, updateMessageRead }) => {
+let positionLine = {}
+const Chat = ({ userActive, loadingConversations, updateMessageRead }) => {
   const [urlPreviewImage, setUrlPreviewImage] = useState("")
   const [loadingMessages, setLoadingMessages] = useState(false)
   const containerChatRef = useRef()
-  const lineRef = useRef()
+  const lineRefTop = useRef()
+  const lineRefBottom = useRef()
 
   useEffect(() => {
-    positionLine = lineRef.current.getBoundingClientRect().top
+    positionLine = {
+      top: lineRefTop.current.getBoundingClientRect().bottom,
+      bottom: lineRefBottom.current.getBoundingClientRect().top
+    }
     const socket = io(url)
-    socket.on('newMessage', async message => {
-      await newMessage(message)
+    socket.on('newMessage', async () => {
       setTimeout(() => loadingConversations(), 200)
     })
     socketMessageRead.on('messageRead', message => {
-      updateMessageRead(message)
+      setTimeout(() => updateMessageRead(message), 300)
     })
   }, [])
 
@@ -40,22 +44,28 @@ const Chat = ({ userActive, newMessage, loadingConversations, updateMessageRead 
         containerChatRef={containerChatRef}
         setUrlPreviewImage={setUrlPreviewImage}
         setLoadingMessages={setLoadingMessages}
+        loadingMessages={loadingMessages}
       />
     )
   }
 
   return (
     <>
-      {urlPreviewImage &&
+      <CSSTransition
+        in={!!urlPreviewImage}
+        timeout={300}
+        classNames='preview'
+        unmountOnExit
+      >
         <div className="preview-image">
           <div className="close-preview" onClick={() => setUrlPreviewImage(false)}>
             <i className="fas fa-times"></i>
           </div>
           <figure>
-            <img src={urlPreviewImage} alt="" />
+            {urlPreviewImage && <img src={urlPreviewImage} alt="" />}
           </figure>
         </div>
-      }
+      </CSSTransition>
       <ContainerChat>
         <div className="loader-mensagens">
           <PulseLoader
@@ -63,10 +73,9 @@ const Chat = ({ userActive, newMessage, loadingConversations, updateMessageRead 
             color='#7693d2'
           />
         </div>
-        {userActive.hasOwnProperty('_id') && renderContainerPosts()
-
-        }
-        <MessageViewed ref={lineRef} />
+        {userActive.hasOwnProperty('_id') && renderContainerPosts()}
+        <LineScroll ref={lineRefTop} top={true} />
+        <LineScroll ref={lineRefBottom} />
         {userActive.hasOwnProperty('_id')
           && <SendMessage containerChatRef={containerChatRef}
           />
@@ -78,4 +87,4 @@ const Chat = ({ userActive, newMessage, loadingConversations, updateMessageRead 
 const mapStateToProps = state => ({
   userActive: state.posts.userActive
 })
-export default connect(mapStateToProps, { newMessage, loadingConversations, updateMessageRead })(Chat)
+export default connect(mapStateToProps, { loadingConversations, updateMessageRead })(Chat)
