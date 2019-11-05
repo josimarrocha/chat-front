@@ -14,7 +14,7 @@ const SendMessage = ({ userActive, userInfo, containerChatRef }) => {
   const textareaRef = useRef()
 
   const sendMessage = async () => {
-    if (messageText || fileImg) {
+    if (messageText.trim() !== '' || fileImg) {
       const data = new FormData()
       data.append('userId', userActive._id)
       data.append('message', messageText)
@@ -66,8 +66,7 @@ const SendMessage = ({ userActive, userInfo, containerChatRef }) => {
             <div className='close-picker' onClick={() => {
               textareaRef.current.focus()
               setShowEmoji(false)
-            }
-            } />
+            }} />
             <Picker
               onSelect={addEmoji}
               set={'google'}
@@ -83,7 +82,6 @@ const SendMessage = ({ userActive, userInfo, containerChatRef }) => {
           value={messageText}
           onChange={onChangeTextArea}
           onKeyUp={(e) => {
-
             if (e.keyCode === 13) {
               sendMessage()
             }
