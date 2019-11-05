@@ -12,10 +12,8 @@ export const ContainerChat = styled.div`
   border-radius: 8px;
   overflow: hidden;
   position: relative;
+  box-shadow: 0 0 10px #666; 
 
-  /* @media (max-height:670px){
-    height: 85vh
-  } */
   .preview-image{
     position: absolute;
     width: 100%;
@@ -35,4 +33,26 @@ export const ContainerChat = styled.div`
       }
     }
   }
+
+  .loader{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+.preview-enter {
+  opacity: 0;
+}
+.preview-enter-active {
+  opacity: 1;
+  transition: opacity 400ms ease-in;
+}
+.preview-exit {
+  opacity: 1;
+}
+.preview-exit-active {
+  opacity: 0;
+  transition: opacity 200ms ease-out;
+}
 `

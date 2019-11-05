@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
+import { PulseLoader } from 'react-spinners'
 import { updateStatus } from '../../reducers/conversations/actionsCreators'
 import { loginUser, getInfoUserLogged } from '../../reducers/userInfo/actionsCreators'
 import { loadingConversations } from '../../reducers/conversations/actionsCreators'
@@ -14,14 +15,16 @@ let timer
 const Chat = ({ userInfo, loadingConversations, userActive, updateStatus, getInfoUserLogged }) => {
   const [isLogged, setIsLogged] = useState(null)
   const [isInitialStatusUpdate, setIsInitialStatusUpdate] = useState(false)
+  const [isShowLoader, setIsShowLoader] = useState(true)
 
   useEffect(() => {
     const getUserInfo = async () => {
       const token = JSON.parse(localStorage.getItem('@chat@'))
       if (token) {
         setIsLogged(true)
-        getInfoUserLogged()
-        loadingConversations()
+        await getInfoUserLogged()
+        await loadingConversations()
+        setTimeout(() => setIsShowLoader(false), 500)
       } else {
         setIsLogged(false)
       }
@@ -54,14 +57,24 @@ const Chat = ({ userInfo, loadingConversations, userActive, updateStatus, getInf
     <ContainerChat>
       {isLogged === false && <Auth />}
 
-      {isLogged && <>
-        {/* info user and search users */}
-        <InfoUser socket={socket} />
-        {/* Component message */}
-        <Posts />
-        {/* Component list users */}
-        <ListChat />
-      </>}
+      {isLogged &&
+        <>
+          {isShowLoader
+            ? <div className="loader">
+              <PulseLoader
+                color='rgba(89, 125, 204, 0.8)'
+              />
+            </div>
+            : <>
+              {/* info user and search users */}
+              <InfoUser socket={socket} />
+              {/* Component message */}
+              <Posts />
+              {/* Component list users */}
+              <ListChat />
+            </>
+          }
+        </>}
     </ContainerChat>
   )
 }
