@@ -30,6 +30,7 @@ export const ContainerMessage = styled.div`
     float: ${props => props.isIdUserLogged ? 'right' : 'left'};
     display: flex;
     flex-direction: column;
+    box-shadow: 0 0 15px #aaa;
     position: ${props => props.preview ? 'static' : 'relative'};
 
     &::after{
@@ -52,6 +53,7 @@ export const ContainerMessage = styled.div`
       overflow: hidden;
       max-width: 100%;
       max-height: 250px;
+      cursor: pointer;
     }
     .content-img img{
       width: 210px;
@@ -73,4 +75,5 @@ export const ContainerMessage = styled.div`
       }
     }
   }
+  
 `
