@@ -18,6 +18,7 @@ const SearchUser = ({ searchUsers, searchUser }) => {
       <form action="">
         <input type="text"
           ref={inputRef}
+          className='input-search'
           onFocus={() => setShowList(true)}
           onBlur={() => inputRef.current.value = ''}
           placeholder='Pesquisar usuários'
