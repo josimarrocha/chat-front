@@ -149,7 +149,7 @@ export const ModalUpdateName = styled.div`
     .form-group input{
       width: 100%;
       /* height: 35px; */
-      padding: 5px 5px;
+      padding: 8px 5px;
     }
 
     .action{

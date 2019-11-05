@@ -66,7 +66,7 @@ const InfoUser = ({ userInfo, userActive, status, updateImageProfile, updateName
   }
 
   return (
-    <ConatinerInfo>
+    <ConatinerInfo className='header-info'>
       {fileImage && <PreviewImage>
         <div className="close-preview" onClick={closeUpdateImage}>
           <i className="fas fa-times"></i>
@@ -123,12 +123,12 @@ const InfoUser = ({ userInfo, userActive, status, updateImageProfile, updateName
             <img src={userInfo.imageProfile ? userInfo.imageProfile : 'images/userDefault.png'} alt="" />
           </div>
         </div>
-        {isMenuVisible &&
-          <UserMenuConfig
-            setFileImage={setFileImage}
-            setIsMenuVisible={setIsMenuVisible}
-            setShowInpurtUpdateName={setShowInpurtUpdateName} />
-        }
+        <UserMenuConfig
+          setFileImage={setFileImage}
+          setIsMenuVisible={setIsMenuVisible}
+          isMenuVisible={isMenuVisible}
+          setShowInpurtUpdateName={setShowInpurtUpdateName}
+        />
       </div>
     </ConatinerInfo>
   )
