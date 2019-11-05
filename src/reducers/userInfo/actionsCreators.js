@@ -23,15 +23,20 @@ export const loginUser = (email, password) => async dispatch => {
 }
 
 export const getInfoUserLogged = () => async dispatch => {
-  const user = await api.get('/user')
-  clearInterval(timer)
-  timer = setInterval(() => {
-    socket.emit('online', user.data._id)
-  }, 2000)
-  dispatch({
-    type: LOGIN_USER,
-    payload: user.data
-  })
+  try {
+    const user = await api.get('/user')
+    clearInterval(timer)
+    timer = setInterval(() => {
+      socket.emit('online', user.data._id)
+    }, 2000)
+    dispatch({
+      type: LOGIN_USER,
+      payload: user.data
+    })
+  } catch (error) {
+    localStorage.removeItem('@chat@')
+    window.location.reload()
+  }
 }
 
 export const searchUser = (query) => async dispatch => {
