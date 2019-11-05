@@ -10,6 +10,7 @@ export const ConfigList = styled.ul`
   color: #666;
   list-style-type: none;
   z-index: 14;
+  outline: 0;
   li{
     font-size: 15px;
     font-weight: 600;
