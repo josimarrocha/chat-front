@@ -2,15 +2,14 @@ import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import api from '../../../config/api'
 import getHours from '../../../config/getHours'
-import { loadingPosts } from '../../../reducers/posts/actionsCreators'
+import { loadingPosts, changeUserActive } from '../../../reducers/posts/actionsCreators'
 import { updateStatus } from '../../../reducers/conversations/actionsCreators'
 import { UserConversation } from './styles'
 
-const UserChat = ({ userChat, loadingPosts, search, listConversations, lastUpdate, updateStatus, userActive, posts, messagesNotRead, setIsShowConfirm, setDeleteUser, idConversation, setShowList }) => {
+const UserChat = ({ userChat, loadingPosts, search, listConversations, lastUpdate, updateStatus, userActive, posts, messagesNotRead, setIsShowConfirm, setDeleteUser, idConversation, setShowList, changeUserActive }) => {
   const [isMenuOptions, setIsMenuOptions] = useState(false)
 
   const createConversation = async (userId) => {
-    console.log('teste')
     const isCreatedConversation = listConversations.contacts.some(conversation => conversation.user._id === userId)
     if (!isCreatedConversation) {
       const { data } = await api.post('/create/conversation', { userId })
@@ -23,16 +22,20 @@ const UserChat = ({ userChat, loadingPosts, search, listConversations, lastUpdat
     }
   }
 
-  const handleClickList = async (idConversation) => {
+  const handleClickList = (idConversation) => {
     if (!userActive.hasOwnProperty('_id')) {
-      await loadingPosts({ ...userChat, idConversation, messagesNotRead })
+      loadingPosts({ ...userChat, idConversation, messagesNotRead })
       return false
     }
     if (userActive.hasOwnProperty('_id')) {
-      if (userActive._id.toString() === userChat._id.toString() && posts[idConversation]) {
+      if (userActive._id.toString() === userChat._id.toString()) {
         return false
       }
-      await loadingPosts({ ...userChat, idConversation, messagesNotRead })
+      if (posts[idConversation]) {
+        changeUserActive({ ...userChat, idConversation, messagesNotRead })
+        return
+      }
+      loadingPosts({ ...userChat, idConversation, messagesNotRead })
       updateStatus(true)
     }
   }
@@ -90,4 +93,4 @@ const mapStateToProps = state => ({
   posts: state.posts.posts
 })
 
-export default connect(mapStateToProps, { loadingPosts, updateStatus })(UserChat)
+export default connect(mapStateToProps, { loadingPosts, updateStatus, changeUserActive })(UserChat)
