@@ -1,4 +1,4 @@
-import { LOADING_POSTS, NEW_MESSAGE, CLEAN_POSTS_USER, MESSAGE_READ, PREVIOUS_POSTS } from './actionsCreators'
+import { LOADING_POSTS, NEW_MESSAGE, CLEAN_POSTS_USER, MESSAGE_READ, PREVIOUS_POSTS, CHANGE_USER_ACTIVE } from './actionsCreators'
 
 const initialState = {
   posts: {},
@@ -11,36 +11,48 @@ const loadingPosts = (state = initialState, action) => {
       const { userActive, posts } = action.payload
       return {
         ...state,
-        ...posts,
         posts: {
           ...state.posts,
-          [posts.idConversation]: posts.posts
+          [posts.idConversation]: posts
         },
         userActive: userActive
       }
     }
+    case CHANGE_USER_ACTIVE:
+      return {
+        ...state,
+        userActive: action.payload
+      }
     case PREVIOUS_POSTS: {
       const { posts } = action.payload
       return {
         ...state,
-        ...action.payload.posts,
         posts: {
           ...state.posts,
-          [posts.idConversation]: [...posts.posts, ...state.posts[posts.idConversation]]
+          [posts.idConversation]: {
+            ...state.posts[posts.idConversation],
+            ...posts,
+            posts: [...posts.posts, ...state.posts[posts.idConversation].posts]
+          }
         },
       }
     }
     case NEW_MESSAGE: {
       const { conversation } = action.payload
-      return {
-        ...state,
-        posts: {
-          ...state.posts,
-          [conversation]: state.posts[conversation]
-            ? state.posts[conversation].concat(action.payload)
-            : [action.payload]
+      if (state.posts[conversation]) {
+        return {
+          ...state,
+          posts: {
+            ...state.posts,
+            [conversation]: {
+              ...state.posts[conversation],
+              posts: state.posts[conversation].hasOwnProperty('posts') &&
+                state.posts[conversation].posts.concat(action.payload)
+            }
+          }
         }
       }
+      return state
     }
     case CLEAN_POSTS_USER: {
       const { [action.payload]: id, ...tall } = state.posts
@@ -57,9 +69,12 @@ const loadingPosts = (state = initialState, action) => {
         ...state,
         posts: {
           ...state.posts,
-          [conversation]: state.posts[conversation].map(message => message._id === _id
-            ? { ...action.payload }
-            : message)
+          [conversation]: {
+            ...state.posts[conversation],
+            posts: state.posts[conversation].posts.map(message => message._id === _id
+              ? { ...action.payload }
+              : message)
+          }
         }
       }
     }

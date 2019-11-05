@@ -1,11 +1,11 @@
 import api from '../../config/api'
-import { UPDATE_MESSAGES_NOT_READ } from '../conversations/actionsCreators'
+import { UPDATE_MESSAGES_NOT_READ, STATUS } from '../conversations/actionsCreators'
 export const LOADING_POSTS = 'posts:LOADING_POSTS'
 export const PREVIOUS_POSTS = 'posts:PREVIOUS_POSTS'
 export const CLEAN_POSTS_USER = 'posts:CLEAN_POSTS_USER'
 export const NEW_MESSAGE = 'posts:NEW_MESSAGE'
 export const MESSAGE_READ = 'posts:MESSAGE_READ'
-
+export const CHANGE_USER_ACTIVE = 'posts:CHANGE_USER_ACTIVE'
 
 export const loadingPosts = (userChatActive) => async dispatch => {
   let messages
@@ -15,10 +15,20 @@ export const loadingPosts = (userChatActive) => async dispatch => {
   dispatch({
     type: LOADING_POSTS,
     payload: {
-      // posts: messages ? messages.data : { messages: [], _id: userChatActive.idConversation },
       posts: messages ? messages.data : { messages: [], _id: userChatActive.idConversation },
       userActive: userChatActive,
     }
+  })
+}
+
+export const changeUserActive = (userActive) => dispatch => {
+  dispatch({
+    type: STATUS,
+    payload: {}
+  })
+  dispatch({
+    type: CHANGE_USER_ACTIVE,
+    payload: userActive
   })
 }
 
