@@ -1,6 +1,7 @@
 {
   "short_name": "React App",
-  "name": "Create React App Sample",
+  "name": "Chat",
+  "scope": ".",
   "icons": [
     {
       "src": "favicon.ico",
@@ -16,9 +17,9 @@
       "src": "logo512.png",
       "type": "image/png",
       "sizes": "512x512"
-    }	    
+    }
   ],
-  "start_url": ".",
+  "start_url": "/",
   "display": "standalone",
   "theme_color": "#000000",
   "background_color": "#ffffff"
