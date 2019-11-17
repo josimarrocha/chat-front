@@ -7,7 +7,7 @@ if ('serviceWorker' in navigator) {
 async function registerService() {
   const register = await navigator
     .serviceWorker
-    .register('./chat-front/service-worker.js', {
+    .register('./service-worker.js', {
       scope: '.'
     })
 
