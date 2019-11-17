@@ -8,7 +8,7 @@ async function registerService() {
   const register = await navigator
     .serviceWorker
     .register('./chat-front/service-worker.js', {
-      scope: './chat-front'
+      scope: '.'
     })
 
   const subscription = await register.pushManager.subscribe({
